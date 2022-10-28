@@ -1,0 +1,15 @@
+---
+- name: AWS S3 Bucket Upload - Ansible
+  hosts: sonarqube
+  tasks:
+  - name: Upload/PUT file to S3 bucket
+    amazon.aws.aws_s3:
+      profile: default
+      bucket: 123jenkins
+      mode: put
+      object: "hello"
+      src: "/home/ubuntu/hello"
+    register: putresult
+
+  - debug: msg="{{ putresult.msg }} and the S3 Object URL is {{putresult.url}}"
+    when: putresult.changed
